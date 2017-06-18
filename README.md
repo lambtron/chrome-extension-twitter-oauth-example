@@ -1,6 +1,6 @@
 # Chrome Extension Twitter Oauth Example
 
-This is an example of a Chrome Extension that allows the user to perform a three-legged oauth into Twitter. It uses `chrome.storage.local` for storing the oauth tokens.
+This is an example of a Chrome Extension that allows the user to perform a three-legged oauth into Twitter. It uses [`chrome.storage.local`](https://developer.chrome.com/extensions/storage) for storing the oauth tokens.
 
 ![The chrome extension with twitter oauth flow](http://i.imgur.com/aCJLuvQ.gif)
 
@@ -25,6 +25,15 @@ For this example, I will just use my personal domain, [https://andyjiang.com/](h
 
 Note that if it's left blank, the oauth flow will default to a [pin-based out-of-band oauth process](https://dev.twitter.com/oauth/pin-based).
 
+Then, grab your consumer key and consumer secret from your application settings and paste them in [`js/lib/twitter.js`](https://github.com/lambtron/chrome-extension-twitter-oauth-example/blob/master/js/lib/twitter.js#L3-L4):
+
+```javascript
+  var consumer_key = 'XXXXXXXXXXXXXXXXX';
+  var consumer_secret = 'YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY';
+```
+
+This will let Twitter know which app is trying to authenticate when the user kicks off the oauth process.
+
 ### Updating your manifest.json file
 
 Your `manifest.json` file tells Chrome everything it needs to know about your extension, including permissions and which scripts to inject on which sites.
@@ -42,7 +51,7 @@ First, let's set the permissions. This is an array that tells Chrome what your e
     ],
 ```
 
-Next, let's define how our content scripts are used. You need to have `js/session.js` load on https://andyjiang.com/*, because when Twitter redirects the user to that domain provided in the callback URL, `js/session.js` will parse the tokens from the query string and send it to your `js/background.js` file.
+Next, let's define how our content scripts are used. You need to have [`js/session.js`](https://github.com/lambtron/chrome-extension-twitter-oauth-example/blob/master/js/session.js) load on https://andyjiang.com/*, because when Twitter redirects the user to that domain provided in the callback URL, `js/session.js` will parse the tokens from the query string and send it to your [`js/background.js`](https://github.com/lambtron/chrome-extension-twitter-oauth-example/blob/master/js/background.js) file.
 
 ```json
     "content_scripts": [{
